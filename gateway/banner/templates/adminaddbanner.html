@@ -1,0 +1,27 @@
+{% extends "admin_dash.html" %}
+{% load static %}
+{% block active10 %} "active" {% endblock%}
+{% block tablewrapper %}
+                    
+                    <div class="col-sm-6">
+						<h2>Banner</h2>
+					</div>
+                    <div class="col-sm-6">
+                        
+    
+                      </div>
+                    </div>
+
+                    
+{% endblock %}
+{% block tablecontent%}
+                
+<form method="post" enctype="multipart/form-data" action="{% url 'adminaddbanner' %}">
+  {% csrf_token %}
+  <label for="image">Banner Image:</label>
+  <input type="file" name="image" accept="image/*" required>
+  <br>
+  <input type="submit" value="Upload Banner">
+</form>
+                
+{% endblock %}

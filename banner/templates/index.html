@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Banner Images</title>
+</head>
+<body>
+    <h1>Banner Images</h1>
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        <input type="file" name="image" accept="image/*">
+        <button type="submit">Upload</button>
+    </form>
+    <ul>
+        {% for banner in banners %}
+            <li>
+                <img src="https://res.cloudinary.com/dkocmifft/image/upload/{{ banner.public_id }}.jpg" alt="Banner Image">
+                <form action="/delete/{{ banner.id }}" method="POST">
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -138,9 +138,6 @@ def delete_product(request, product_id):
             return JsonResponse({'error': 'Failed to delete the product'}, status=500)
     except requests.exceptions.RequestException as e:
         return JsonResponse({'error': 'Failed to connect to the other server.'}, status=500)
-    
-
-
 
 def shop(request):
     products_url = 'http://localhost:8001/filter_products/' 
@@ -166,22 +163,8 @@ def shop(request):
     print(cat)
     return render(request, 'index_user.html', {'page_obj': page_obj, 'cat': cat, 'products': products})
 
-# def shopsingle(request):
-#     uid = request.GET.get('uid')
-#     product = Product.objects.prefetch_related('images').filter(id=uid).first()
-#     images = product.images.all() if product else []
-#     variants = ProductVariant.objects.filter(product=product).order_by('price')
-#     products_in_same_category = Product.objects.filter(category=product.category)
-#     category_offer_percentage = None
-#     if product.category:
-#         category_offer_percentage = product.category.offer_percentage
-#     return render(request, 'product_detail.html', {'product': product, 'images': images,'variants': variants, 'products_in_same_category':products_in_same_category,'category_offer_percentage':category_offer_percentage})
-
 def add_variant_prod(request, product_id):
-    # Define the URL of the ProductVariant service (localhost:8003)
     product_variant_url = f'http://localhost:8003/create_variant/'
-
-    # Make a request to fetch the product data from another server (localhost:8001)
     try:
         response = requests.get(f'http://localhost:8001/get_product/{product_id}/')
         if response.status_code == 200:
@@ -190,14 +173,10 @@ def add_variant_prod(request, product_id):
             return JsonResponse({'error': 'Failed to fetch product from the other server.'}, status=500)
     except requests.exceptions.RequestException as e:
         return JsonResponse({'error': 'Failed to connect to the other server.'}, status=500)
-
     if request.method == 'POST':
-        # Retrieve variant details from the form
         variant_name = request.POST['variant_name'].strip()
         variant_price = request.POST['variant_price'].strip()
         variant_stock = request.POST['variant_stock'].strip()
-
-        # Validate variant data
         if variant_name == '':
             messages.error(request, 'Variant name cannot be empty.')
         elif variant_price == '':
@@ -208,20 +187,15 @@ def add_variant_prod(request, product_id):
             messages.error(request, 'Variant stock cannot be empty.')
         elif not variant_stock.isdigit() or int(variant_stock) < 0:
             messages.error(request, 'Variant stock should be a non-negative integer.')
-
         if not messages.get_messages(request):
-            # Create a variant data to send to the ProductVariant service
             variant_data = {
-                'product': product_id,  # The ID of the product
+                'product': product_id, 
                 'variant': variant_name,
                 'price': variant_price,
                 'stock': variant_stock
             }
-
-            # Make a POST request to create the product variant
             print(variant_data)
             variant_response = requests.post(product_variant_url, variant_data)
-
             if variant_response.status_code == 201:
                 messages.success(request, 'Variant added successfully.')
                 return redirect('admin_product_page')
@@ -236,32 +210,25 @@ product_variant_service_url = 'http://localhost:8003/'
 def fetch_product_from_service(product_id):
     product_url = f'{product_service_url}get_product/{product_id}/'
     response = requests.get(f'http://localhost:8001/get_product/{product_id}/')
-
     if response.status_code == 200:
         return response.json()
     return None 
-
 def fetch_variants_from_service(product_id):
     variants_url = f'{product_variant_service_url}get_variants/?product_id={product_id}'
     response = requests.get(variants_url)
-
     if response.status_code == 200:
         return response.json()
     return []  
 def edit_variants(request, product_id):
     product = fetch_product_from_service(product_id)
-
     if product is None:
         return JsonResponse({'error': 'Failed to fetch the product.'}, status=500)
-
     variants = fetch_variants_from_service(product_id)
-
     if request.method == 'POST':
         for variant in variants:
             variant_name = request.POST.get(f'{variant["id"]}_name', '').strip()
             variant_price = request.POST.get(f'{variant["id"]}_price', '').strip()
             variant_stock = request.POST.get(f'{variant["id"]}_stock', '').strip()
-
             if variant_name == '':
                 messages.error(request, 'Variant name cannot be empty.')
             elif variant_price == '':
@@ -272,7 +239,6 @@ def edit_variants(request, product_id):
                 messages.error(request, 'Variant stock cannot be empty.')
             elif not variant_stock.isdigit() or int(variant_stock) < 0:
                 messages.error(request, 'Variant stock should be a non-negative integer.')
-
             if not messages.get_messages(request):
                 variant_update_url = f'{product_variant_service_url}update_variant/{variant["id"]}/'
                 variant_data = {
@@ -282,59 +248,37 @@ def edit_variants(request, product_id):
                 }
                 print(variant_data)
                 response = requests.put(variant_update_url, json=variant_data)
-
                 if response.status_code == 200:
-                    # Variant updated successfully
                     messages.success(request, f'Variant {variant_name} updated successfully.')
                     return redirect('admin_product_page')
                 elif response.status_code == 204:
-                    # Variant deleted successfully
                     messages.success(request, f'Variant {variant_name} deleted successfully')
                     return redirect('admin_product_page')
                 else:
                     messages.error(request, 'Failed to update the variant.')
-
         if not messages.get_messages(request):
             return redirect('admin_product_page')
-
     return render(request, 'edit_variants.html', {'product': product, 'variants': variants})
 
 
 def shopsingle(request):
     uid = request.GET.get('uid')
-
-    # Make a request to the product service to get the product information
     product_response = requests.get('http://localhost:8001/get_product', params={'product_id': uid})
-    
     if product_response.status_code == 200:
         product = product_response.json()
-        # Get the category ID from the product
         category_id = product[0]['category']
-        
-        # Make a request to the product service to get products in the same category
         products_in_same_category_response = requests.get(f'http://localhost:8001/get_products_by_category/{category_id}/')
         
         if products_in_same_category_response.status_code == 200:
             products_in_same_category = products_in_same_category_response.json()
         else:
             products_in_same_category = []
-
-        # Make a request to the product variant service to get product variants
         variants_response = requests.get('http://localhost:8003/get_variants', params={'product_id': uid})
-        
         if variants_response.status_code == 200:
             variants = variants_response.json()
         else:
             variants = []
-
-        # category_offer_percentage = product.get('category_offer_percentage')
-        print("product",product)
-        print()
-        print("variants",variants)
-        print()
-        print("products_in_same_category",products_in_same_category)
-        print()
         return render(request, 'product_detail.html', {'product': product[0], 'variants': variants, 'products_in_same_category': products_in_same_category})
     else:
-        # Handle the case where the product service returns an error
         return render(request, 'error.html', {'error_message': 'Failed to retrieve product information'})
+    
