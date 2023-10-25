@@ -22,4 +22,5 @@ urlpatterns = [
     path('product', include('productManager.urls'), name='productManager'),
     path('', include('banner.urls')),
     path('authentication/', include('authentication.urls'), name='authentication'),
+    path('wallet/', include('wallet.urls'), name='wallet'),
 ]

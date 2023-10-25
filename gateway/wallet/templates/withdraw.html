@@ -1,0 +1,37 @@
+{% extends 'theme.html' %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row justify-content-center">
+    
+    <div class="col-md-6">
+      {% if messages %}
+<div class="alert alert-dismissible fade show mt-3" role="alert">
+  {% for message in messages %}
+    {{ message }}
+  {% endfor %}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Withdraw</h3>
+        </div>
+        <div class="card-body">
+          <form method="post" action="{% url 'wallet:withdraw' %}">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="amount" class="form-label">Amount:</label>
+              <input type="number" id="amount" name="amount" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Withdraw</button>
+          </form>
+          <a href="{% url 'wallet:wallet_balance' %}" class="btn btn-primary mt-3">Back To Wallet</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

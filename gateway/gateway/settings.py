@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "productManager",
     "banner",
     "authentication",
+    "wallet",
     
 ]
 

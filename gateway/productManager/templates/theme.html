@@ -128,7 +128,7 @@
                       <div class="dropdown-menu m-0">
                         
                         <a class="dropdown-item category" href="" data-category-id="" onclick="showLoginPopup(event)">My Orders</a>
-                        <a class="dropdown-item category" href="" data-category-id="" onclick="showLoginPopup(event)">My Wallet</a>
+                        <a class="dropdown-item category" href="{% url 'wallet:wallet_balance' %}" data-category-id="" onclick="showLoginPopup(event)">My Wallet</a>
                         <div class="popup">
                           <p>Please log in to access this feature</p>
                           <button class="login-btn">Log In</button>
