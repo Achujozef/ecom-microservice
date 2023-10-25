@@ -1,0 +1,17 @@
+<!-- home.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product List</title>
+</head>
+<body>
+    <h1>Product List</h1>
+    {% comment %} <ul>
+        {% for product in products %}
+            <li>{{ product.name }} - Price: {{ product.price }}</li>
+        {% empty %}
+            <li>No products available</li>
+        {% endfor %}
+    </ul> {% endcomment %}
+</body>
+</html>
