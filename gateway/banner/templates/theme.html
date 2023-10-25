@@ -119,16 +119,16 @@
                  <div class="navbar-nav ms-auto p-4 p-lg-0">
                   {% block search %}
                   {% endblock %}
-                  <a href="{% url 'base_file'%}" class="nav-item nav-link active">Home</a>
-                     <a href="{% url 'shop'%}" class="nav-item nav-link active">Products</a>
+                  <a href="" class="nav-item nav-link active">Home</a>
+                     <a href="" class="nav-item nav-link active">Products</a>
                      {% comment %} <a href="{% url 'about'%}" class="nav-item nav-link">About Us</a> {% endcomment %}
                      {% comment %} <a href="" class="nav-item nav-link">Products</a> {% endcomment %}
                      <div class="nav-item dropdown">
                       <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Activites</a>
                       <div class="dropdown-menu m-0">
                         
-                        <a class="dropdown-item category" href="{% url 'order'%}" data-category-id="" onclick="showLoginPopup(event)">My Orders</a>
-                        <a class="dropdown-item category" href="{% url 'balance'%}" data-category-id="" onclick="showLoginPopup(event)">My Wallet</a>
+                        <a class="dropdown-item category" href="" data-category-id="" onclick="showLoginPopup(event)">My Orders</a>
+                        <a class="dropdown-item category" href="" data-category-id="" onclick="showLoginPopup(event)">My Wallet</a>
                         <div class="popup">
                           <p>Please log in to access this feature</p>
                           <button class="login-btn">Log In</button>
@@ -143,14 +143,14 @@
                     
       
                   </div>
-                     <a class="btn-sm-square bg-white rounded-circle ms-3" href="{% url 'userprofile' %}"onclick="showLoginPopup(event)">
+                     <a class="btn-sm-square bg-white rounded-circle ms-3" href=""onclick="showLoginPopup(event)">
                          <small class="fa fa-user text-body"></small>
                      </a>
                      <div class="popup">
                       <p>Please log in to access this feature</p>
                       <button class="login-btn">Log In</button>
                     </div>
-                     <a class="btn-sm-square bg-white rounded-circle ms-3" href="{% url 'cart'%}" onclick="showLoginPopup(event)">
+                     <a class="btn-sm-square bg-white rounded-circle ms-3" href="" onclick="showLoginPopup(event)">
                       <i class="fa fa-shopping-cart"></i>
                          {% if cart_item_count > 0 %}
                           <span class="cart-item-count">{{ cart_item_count }}</span>
@@ -161,7 +161,7 @@
                          <p>Please log in to access this feature</p>
                          <button class="login-btn">Log In</button>
                        </div>
-                       <a class="btn-sm-square bg-white rounded-circle ms-3" href="{% url 'wishlist'%}">
+                       <a class="btn-sm-square bg-white rounded-circle ms-3" href="">
                         <small class="fa fa-heart text-body"></small>
                     </a>
                     <div class="popup">
@@ -221,9 +221,9 @@
                   <div class="position-relative mx-auto" style="max-width: 400px;">
                       
                     {% if request.session.username %}
-                    <a href="{% url 'user_logout' %}" class="btn btn-danger">Logout</a>
+                    <a href="" class="btn btn-danger">Logout</a>
                 {% else %}
-                    <a href="{% url 'user_login' %}" class="btn btn-success">Login</a>
+                    <a href="" class="btn btn-success">Login</a>
                 {% endif %}
                     
                      
@@ -264,11 +264,11 @@
   <script src="{% static 'js/main.js' %}"></script>
   <script>
     $(document).ready(function() {
-        $('a[href="{% url 'cart' %}"]').click(function(e) {
+        $('a[href=""]').click(function(e) {
             e.preventDefault();
             {% if request.session.username %}
                 // User is logged in, redirect to the cart page
-                window.location.href = "{% url 'cart' %}";
+                window.location.href = "";
             {% else %}
                 // User is not logged in, show login popup
                 var loginPopup = '<div class="modal fade" id="loginModal" tabindex="-1" role="dialog">' +
@@ -284,7 +284,7 @@
                     '<p>You need to login to access this feature.</p>' +
                     '</div>' +
                     '<div class="modal-footer">' +
-                    '<a href="{% url 'user_login' %}" class="btn btn-primary">Login</a>' +
+                    '<a href="" class="btn btn-primary">Login</a>' +
                     '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>' +
                     '</div>' +
                     '</div>' +
@@ -297,11 +297,11 @@
 </script>
 <script>
   $(document).ready(function() {
-      $('a[href="{% url 'order' %}"]').click(function(e) {
+      $('a[href=""]').click(function(e) {
           e.preventDefault();
           {% if request.session.username %}
               // User is logged in, redirect to the cart page
-              window.location.href = "{% url 'order' %}";
+              window.location.href = "";
           {% else %}
               // User is not logged in, show login popup
               var loginPopup = '<div class="modal fade" id="loginModal" tabindex="-1" role="dialog">' +
@@ -317,7 +317,7 @@
                   '<p>You need to login to access this feature.</p>' +
                   '</div>' +
                   '<div class="modal-footer">' +
-                  '<a href="{% url 'user_login' %}" class="btn btn-primary">Login</a>' +
+                  '<a href="" class="btn btn-primary">Login</a>' +
                   '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>' +
                   '</div>' +
                   '</div>' +
@@ -330,11 +330,11 @@
 </script>
 <script>
   $(document).ready(function() {
-      $('a[href="{% url 'userprofile' %}"]').click(function(e) {
+      $('a[href=""]').click(function(e) {
           e.preventDefault();
           {% if request.session.username %}
               // User is logged in, redirect to the cart page
-              window.location.href = "{% url 'userprofile' %}";
+              window.location.href = "";
           {% else %}
               // User is not logged in, show login popup
               var loginPopup = '<div class="modal fade" id="loginModal" tabindex="-1" role="dialog">' +
@@ -350,7 +350,7 @@
                   '<p>You need to login to access this feature.</p>' +
                   '</div>' +
                   '<div class="modal-footer">' +
-                  '<a href="{% url 'user_login' %}" class="btn btn-primary">Login</a>' +
+                  '<a href="" class="btn btn-primary">Login</a>' +
                   '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>' +
                   '</div>' +
                   '</div>' +
@@ -363,11 +363,11 @@
 </script>
 <script>
   $(document).ready(function() {
-      $('a[href="{% url 'wishlist' %}"]').click(function(e) {
+      $('a[href=""]').click(function(e) {
           e.preventDefault();
           {% if request.session.username %}
               // User is logged in, redirect to the cart page
-              window.location.href = "{% url 'wishlist' %}";
+              window.location.href = "";
           {% else %}
               // User is not logged in, show login popup
               var loginPopup = '<div class="modal fade" id="loginModal" tabindex="-1" role="dialog">' +
@@ -383,7 +383,7 @@
                   '<p>You need to login to access this feature.</p>' +
                   '</div>' +
                   '<div class="modal-footer">' +
-                  '<a href="{% url 'user_login' %}" class="btn btn-primary">Login</a>' +
+                  '<a href="" class="btn btn-primary">Login</a>' +
                   '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>' +
                   '</div>' +
                   '</div>' +

@@ -1,0 +1,58 @@
+{% extends 'theme.html' %}
+
+{% block content %}
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card mt-5">
+                    <div class="card-body">
+                        <h2 class="card-title text-center">Registration</h2>
+                        <form method="post" class="mt-4">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="uname">Username:</label>
+                                <input type="text" id="uname" name="uname" class="form-control" required>
+                                {% if errors.uname %}
+                                    <p class="text-danger">{{ errors.uname }}</p>
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                <label for="uemail">Email:</label>
+                                <input type="email" id="uemail" name="uemail" class="form-control" required>
+                                {% if errors.uemail %}
+                                    <p class="text-danger">{{ errors.uemail }}</p>
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone:</label>
+                                <input type="text" id="phone" name="phone" class="form-control" required>
+                                {% if errors.phone %}
+                                    <p class="text-danger">{{ errors.phone }}</p>
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                <label for="upassword">Password:</label>
+                                <input type="password" id="upassword" name="upassword" class="form-control" required>
+                                {% if errors.upassword %}
+                                    <p class="text-danger">{{ errors.upassword }}</p>
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                <label for="upassword2">Confirm Password:</label>
+                                <input type="password" id="upassword2" name="upassword2" class="form-control" required>
+                                {% if errors.upassword2 %}
+                                    <p class="text-danger">{{ errors.upassword2 }}</p>
+                                {% endif %}
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">Register</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+{% endblock %}

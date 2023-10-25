@@ -23,7 +23,7 @@ def adminbannerlist(request):
             if response.status_code == 200:
                 banners = response.json()
                 # Filter banners based on your search criteria
-                filtered_banners = [banner for banner in banners if search in banner.get('name', '')]
+                filtered_banners = [banner for banner in banners if search in banner.get('name', '')] 
             else:
                 filtered_banners = []  # Set an empty list if there was an error
         else:
@@ -62,3 +62,4 @@ def adminaddbanner(request):
             return HttpResponse(f'Error: {str(e)}', status=500)
     else:
         return render(request, 'adminaddbanner.html')
+    

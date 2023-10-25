@@ -267,8 +267,7 @@
         $('a[href=""]').click(function(e) {
             e.preventDefault();
             {% if request.session.username %}
-                // User is logged in, redirect to the cart page
-                //window.location.href = "{% url 'cart' %}"; uncoment
+
             {% else %}
                 // User is not logged in, show login popup
                 var loginPopup = '<div class="modal fade" id="loginModal" tabindex="-1" role="dialog">' +

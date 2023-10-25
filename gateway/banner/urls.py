@@ -6,4 +6,6 @@ urlpatterns = [
     path('adminbannerlist/', views.adminbannerlist, name='adminbannerlist'),
     path('deletebanner/', views.deletebanner, name='deletebanner'),
     path('adminaddbanner/', views.adminaddbanner, name='adminaddbanner'),
+
 ]
+app_name = 'banner'
